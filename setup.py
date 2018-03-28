@@ -7,5 +7,5 @@ setup(name='soundcloud-scraper',
       author='Zoe Heins',
       author_email='zcheins@gmail.com',
       license='MIT',
-      packages=['soundcloud-scraper'],
+      packages=['soundcloud'],
       zip_safe=False)
