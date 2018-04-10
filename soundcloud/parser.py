@@ -1,14 +1,24 @@
 from bs4 import BeautifulSoup
 
 
-def parse(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    tracklist = soup.find('div', attrs={'class': 'listenDetails__trackList'})
+class SoundCloudParser():
 
-    title_elements = tracklist.find_all('a', attrs={'class': 'trackItem__trackTitle'})
-    username_elements = tracklist.find_all('a', attrs={'class': 'trackItem__username sc-link-light'})
+    def __init__(self, html):
+        self.soup = BeautifulSoup(html)
 
-    track_elements = dict(zip(title_elements, username_elements))
-    tracks = {title.text: username.text for title, username in track_elements.items()}
+    def format_tracks(self, titles, usernames):
+        tracks = dict(zip(titles, usernames))
+        return {title.text: username.text for title, username in tracks.items()}
 
-    return tracks
+    def find_elements(self, element_type, class_name):
+        return self.soup.find_all(element_type, attrs={'class': class_name})
+
+    def parse_playlist(self):
+        titles = self.find_elements('a', 'trackItem__trackTitle')
+        usernames = self.find_elements('a', 'trackItem__username')
+        return self.format_tracks(titles, usernames)
+
+    def parse_likes(self):
+        titles = [title.span for title in self.find_elements('a', 'soundTitle__title')]
+        usernames = self.find_elements('span', 'soundTitle__usernameText')
+        return self.format_tracks(titles, usernames)

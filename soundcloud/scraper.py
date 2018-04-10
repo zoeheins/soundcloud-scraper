@@ -1,12 +1,7 @@
 from selenium import webdriver
 
-def scrape():
-    # temporarily hardcoding url
-    url = 'https://soundcloud.com/user774261744/sets/jamz'
+def scrape(url, window_height):
     driver = webdriver.PhantomJS()
-
-    # how to determine window size so that all tracks fit
-    # could also scroll to bottom
-    driver.set_window_size(2000, 2000)
+    driver.set_window_size(1000, window_height)
     driver.get(url)
     return driver.page_source
