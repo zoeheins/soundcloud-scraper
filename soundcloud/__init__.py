@@ -1,6 +1,9 @@
 from .scraper import scrape
 from .parser import SoundCloudParser
 
+
+# TODO export tracks as .txt file
+
 def get_playlist_tracks(playlist_url):
     html = scrape(playlist_url, 30000)
     return SoundCloudParser(html).parse_playlist()
